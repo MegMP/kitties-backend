@@ -2,8 +2,14 @@ package com.spring.kitties.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User {
+import java.util.Collection;
+import java.util.List;
+
+public class User implements UserDetails {
     static long userCount = 2;
 
     private final long id;
@@ -43,6 +49,11 @@ public class User {
         this.email = email;
         this.password = password;
         this.city = city;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     public Long getId() { return id; }

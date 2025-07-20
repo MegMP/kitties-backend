@@ -3,12 +3,14 @@ package com.spring.kitties.persistence;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.kitties.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class UserRepository {
     private final ObjectMapper mapper = new ObjectMapper();
     private final File userFile = new File("users.json");
@@ -32,6 +34,16 @@ public class UserRepository {
         List<User> users = findAll();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getId() == id) {
+                return users.get(i);
+            }
+        }
+        return null;
+    }
+
+    public User findByUsername(String username) {
+        List<User> users = findAll();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(username)) {
                 return users.get(i);
             }
         }

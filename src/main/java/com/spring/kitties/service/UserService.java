@@ -7,6 +7,7 @@ import com.spring.kitties.persistence.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -19,6 +20,10 @@ public class UserService {
 
     public User loadUser(long id) {
         return userRepository.findById(id);
+    }
+
+    public User loadUser(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public void addUser(User user) {
@@ -37,91 +42,36 @@ public class UserService {
 
     public void deleteUser(User user) {}
 
-    public void updateFirstname(long id, String newFirstname) {
-        List<User> users = userRepository.findAll();
-
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
-                users.get(i).setFirstname(newFirstname);
-                userRepository.saveUsers(users);
-                return;
+    public void updateUser(long id, Map<String, String> updates) {
+        User user = userRepository.findById(id);
+        if (updates.containsKey("firstname")) {
+            user.setFirstname(updates.get("firstname"));
+        }
+        if (updates.containsKey("lastname")) {
+            user.setLastname(updates.get("lastname"));
+        }
+        if (updates.containsKey("username")) {
+            String newUsername = updates.get("username");
+            if (usernameExists(newUsername)) {
+                throw new DuplicateUserFieldException("Username already exists");
             }
+            user.setUsername(newUsername);
+        }
+        if (updates.containsKey("email")) {
+            String newEmail= updates.get("email");
+            if (emailExists(newEmail)) {
+                throw new DuplicateUserFieldException("Username already exists");
+            }
+            user.setEmail(newEmail);
+        }
+        if (updates.containsKey("password")) {
+            user.setPassword(updates.get("password"));
+        }
+        if (updates.containsKey("city")) {
+            user.setCity(updates.get("city"));
         }
         throw new UserNotFoundException("User with id " + id + " not found");
     }
-
-    public void updateLastname(long id, String newLastname) {
-        List<User> users = userRepository.findAll();
-
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
-                users.get(i).setLastname(newLastname);
-                userRepository.saveUsers(users);
-                return;
-            }
-        }
-        throw new UserNotFoundException("User with id " + id + " not found");
-    }
-
-    public void updateUsername(long id, String newUsername) {
-        List<User> users = userRepository.findAll();
-
-        if (usernameExists(newUsername)) {
-            throw new DuplicateUserFieldException("Username already exists");
-        }
-
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
-                users.get(i).setUsername(newUsername);
-                userRepository.saveUsers(users);
-                return;
-            }
-        }
-        throw new UserNotFoundException("User with id " + id + " not found");
-    }
-
-    public void updateEmail(long id, String newEmail) {
-        List<User> users = userRepository.findAll();
-
-        if (emailExists(newEmail)) {
-            throw new DuplicateUserFieldException("Email already exists");
-        }
-
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
-                users.get(i).setEmail(newEmail);
-                userRepository.saveUsers(users);
-                return;
-            }
-        }
-        throw new UserNotFoundException("User with id " + id + " not found");
-    }
-
-    public void updatePassword(long id, String newPassword) {
-        List<User> users = loadUsers();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
-                users.get(i).setPassword(newPassword);
-                userRepository.saveUsers(users);
-                return;
-            }
-        }
-        throw new UserNotFoundException("User with id " + id + " not found");
-    }
-
-    public void updateCity(long id, String newCity) {
-        List<User> users = loadUsers();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
-                users.get(i).setCity(newCity);
-                userRepository.saveUsers(users);
-                return;
-            }
-        }
-        throw new UserNotFoundException("User with id " + id + " not found");
-    }
-
-
 
     public boolean emailExists(String email) {
         List<User> users = loadUsers();
