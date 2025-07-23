@@ -5,24 +5,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.kitties.model.User;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.List;
 
 @Repository
 public class UserRepository {
     private final ObjectMapper mapper = new ObjectMapper();
-    private final File userFile = new File("users.json");
+    private final String usersFilePath = "repository/users.json";
 
     public List<User> findAll() {
+        InputStream usersStream = getClass().getClassLoader().getResourceAsStream(usersFilePath);
+
         try {
-            List<User> users;
-            if (userFile.exists()) {
-                users = mapper.readValue(userFile, new TypeReference<List<User>>() {});
-            } else {
-                users = new ArrayList<>();
-            }
+            List<User> users = mapper.readValue(usersStream, new TypeReference<List<User>>() {});
             return users;
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,11 +47,11 @@ public class UserRepository {
     }
 
     public void saveUsers(List<User> users) {
-        try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(userFile, users);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+////            mapper.writerWithDefaultPrettyPrinter().writeValue(userFile, users);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //save

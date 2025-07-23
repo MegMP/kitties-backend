@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: kitties
+  security:
+    user:
+      name: gosia
+      password: gosia_1234
