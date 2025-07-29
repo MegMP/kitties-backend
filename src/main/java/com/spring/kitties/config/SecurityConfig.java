@@ -1,6 +1,7 @@
 package com.spring.kitties.config;
 
 import com.spring.kitties.persistence.UserRepository;
+import com.spring.kitties.service.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,18 +17,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+        HttpSecurity http,
+        AuthenticationProvider authenticationProvider,
+        JwtAuthenticationFilter jwtAuthenticationFilter
+    ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/tatas/v1/secured/**").authenticated()
                 .requestMatchers("/api/v1/auth/heartbeat").authenticated()
-                .anyRequest().permitAll()
-            );
+                .anyRequest().permitAll())
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        ;
         return http.build();
     }
 
@@ -47,7 +55,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         var users = userRepository.findAll();
         var usersDetails = users.stream()
             .map(user -> User.withUsername(user.getUsername())
