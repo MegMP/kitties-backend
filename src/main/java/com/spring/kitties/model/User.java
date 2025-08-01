@@ -21,7 +21,6 @@ public class User implements UserDetails {
     private String password;
     private String city;
 
-
     @JsonCreator
     public User(@JsonProperty("id") int id,
         @JsonProperty("firstname") String firstname,

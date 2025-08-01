@@ -1,12 +1,17 @@
 package com.spring.kitties.controller;
 
+import com.spring.kitties.exception.DuplicateEmailException;
+import com.spring.kitties.exception.DuplicateUsernameException;
+import com.spring.kitties.model.RegisterRequest;
+import com.spring.kitties.model.User;
 import com.spring.kitties.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/api/v1/accounts")
+@RestController
+@RequestMapping("/api/v1/register")
 public class RegisterController {
     private final UserService userService;
 
@@ -14,26 +19,27 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    @GetMapping("/register")
-    public String home() {
-        return "redirect:/account";
-    }
-
-//    @PostMapping("/register")
-//    public String registerUser(@RequestParam String firstname,
-//       @RequestParam String lastname,
-//       @RequestParam String username,
-//       @RequestParam String email,
-//       @RequestParam String password,
-//       @RequestParam String city,
-//       RedirectAttributes redirectAttributes)
-//    {
-//        try {
-//            userService.addUser(new User(firstname, lastname, username, email, password, city));
-//            return "redirect:/login";
-//        } catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e) {
-//            redirectAttributes.addAttribute("errorMessage", e.getMessage());
-//            return "register";
-//        }
+//    @GetMapping("/register")
+//    public String home() {
+//        return "redirect:/account";
 //    }
+
+    @PostMapping
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request)
+    {
+        System.out.println("t");
+        try {
+            userService.addUser(new User(request.getFirstname(),
+                    request.getLastname(),
+                    request.getUsername(),
+                    request.getEmail(),
+                    request.getPassword(),
+                    request.getCity()));
+            return ResponseEntity.ok().build();
+        } catch (DuplicateEmailException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This email is already in use");
+        } catch (DuplicateUsernameException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This username is already in use");
+        }
+    }
 }
