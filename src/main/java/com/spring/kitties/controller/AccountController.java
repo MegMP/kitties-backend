@@ -4,6 +4,7 @@ import com.spring.kitties.exception.DuplicateEmailException;
 import com.spring.kitties.exception.UserNotFoundException;
 import com.spring.kitties.model.User;
 import com.spring.kitties.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class AccountController {
+
+
     private final UserService userService;
+
+    @Autowired
     public AccountController(UserService userService) {
         this.userService = userService;
     }
