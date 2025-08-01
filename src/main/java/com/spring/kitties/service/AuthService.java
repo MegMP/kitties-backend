@@ -28,7 +28,7 @@ public class AuthService {
             )
         );
 
-        return userRepository.findByUsername(authentication.getName());
+        return userRepository.findByUsername(authentication.getName()).get();
     }
 
     public boolean isAuthenticated() {
