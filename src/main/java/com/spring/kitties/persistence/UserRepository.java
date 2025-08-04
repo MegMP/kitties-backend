@@ -52,7 +52,7 @@ public class UserRepository {
     public boolean usernameExists(String username) {
         List<User> users = findAll();
         return users.stream()
-                .anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
+                .anyMatch(user -> user.getUsername().equals(username));
     }
 
     public Optional<User> findById(long id) {
@@ -67,7 +67,7 @@ public class UserRepository {
         List<User> users = findAll();
 
         return users.stream()
-                .filter(user -> user.getUsername() == username)
+                .filter(user -> user.getUsername().equals(username))
                 .findFirst();
     }
 

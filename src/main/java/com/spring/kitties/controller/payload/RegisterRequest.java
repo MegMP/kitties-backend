@@ -1,4 +1,4 @@
-package com.spring.kitties.model;
+package com.spring.kitties.controller.payload;
 
 public class RegisterRequest {
     private String username;

@@ -5,42 +5,20 @@
   "username" : "Tosia",
   "email" : "tosia@example.com",
   "password" : "meow123",
-  "city" : "Kraków",
-  "authorities" : [ {
-    "authority" : "ROLE_USER"
-  } ],
-  "enabled" : true,
-  "credentialsNonExpired" : true,
-  "accountNonExpired" : true,
-  "accountNonLocked" : true
-}, {
+  "city" : "Kraków"},
+  {
   "id" : 2,
-  "firstname" : null,
+  "firstname" : "Leia",
   "lastname" : "Piesek",
   "username" : "Leia",
   "email" : "leia@example.com",
   "password" : "awoooooo123",
-  "city" : "Leia",
-  "authorities" : [ {
-    "authority" : "ROLE_USER"
-  } ],
-  "enabled" : true,
-  "credentialsNonExpired" : true,
-  "accountNonExpired" : true,
-  "accountNonLocked" : true
-}, {
+  "city" : "Leia"},
+ {
   "id" : 3,
   "firstname" : "Małgorzata",
   "lastname" : "Poskróbek",
   "username" : "Gosia",
   "email" : "gosia@example.com",
   "password" : "12",
-  "city" : "Kraków",
-  "authorities" : [ {
-    "authority" : "ROLE_USER"
-  } ],
-  "enabled" : true,
-  "credentialsNonExpired" : true,
-  "accountNonExpired" : true,
-  "accountNonLocked" : true
-} ]
+  "city" : "Kraków"}]

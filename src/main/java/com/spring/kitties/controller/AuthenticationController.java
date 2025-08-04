@@ -6,7 +6,10 @@ import com.spring.kitties.model.User;
 import com.spring.kitties.persistence.UserRepository;
 import com.spring.kitties.service.AuthService;
 import com.spring.kitties.service.JwtService;
+import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,18 +37,22 @@ public class AuthenticationController {
         User user = authService.authenticate(loginRequest);
 
         return ResponseEntity.ok(new LoginResponse(
-            user.getUsername(),
-            jwtService.generateToken(user)
+                jwtService.generateToken(user)
         ));
     }
 
+//    @PostMapping(path = "/logout")
+//    public ResponseEntity<LoginResponse> logout(@RequestBody LoginRequest loginRequest) {
+//        User user = authService.authenticate(loginRequest);
+//        return ResponseEntity.ok(new LoginResponse(
+//                user.getUsername(),
+//                jwtService.generateToken(user)
+//        ));
+//    }
+
     @GetMapping(path = "/heartbeat")
     public ResponseEntity<String> heartbeat() {
-        if (authService.isAuthenticated()) {
-            return ResponseEntity.ok("Heartbeat successful");
-        } else {
-            return ResponseEntity.status(401).body("Unauthorized");
-        }
+        return ResponseEntity.ok("Heartbeat successful");
     }
 
     @GetMapping("/users")

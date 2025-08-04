@@ -2,12 +2,11 @@ package com.spring.kitties.controller;
 
 import com.spring.kitties.exception.DuplicateEmailException;
 import com.spring.kitties.exception.DuplicateUsernameException;
-import com.spring.kitties.model.RegisterRequest;
+import com.spring.kitties.controller.payload.RegisterRequest;
 import com.spring.kitties.model.User;
 import com.spring.kitties.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

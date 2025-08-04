@@ -1,17 +1,10 @@
 package com.spring.kitties.controller.payload;
 
 public class LoginResponse {
-
-    private final String username;
     private final String token;
 
-    public LoginResponse(String username, String token) {
-        this.username = username;
+    public LoginResponse(String token) {
         this.token = token;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public String getToken() {
