@@ -67,7 +67,7 @@ public class UserRepository {
         List<User> users = findAll();
 
         return users.stream()
-                .filter(user -> user.getUsername() == username)
+                .filter(user -> user.getUsername().equals(username))
                 .findFirst();
     }
 
