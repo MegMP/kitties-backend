@@ -2,6 +2,9 @@ package com.spring.kitties.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,10 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
 public class User {
-    static long userCount = 2;
 
-    private final long id;
+    @Id
+    private Long id;
+
     private String lastname;
     private String firstname;
     private String email;
@@ -21,27 +27,11 @@ public class User {
     private String password;
     private String city;
 
-    @JsonCreator
-    public User(@JsonProperty("id") int id,
-        @JsonProperty("firstname") String firstname,
-        @JsonProperty("lastname") String lastname,
-        @JsonProperty("username") String username,
-        @JsonProperty("email") String email,
-        @JsonProperty("password") String password,
-        @JsonProperty("city") String city)
-    {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.city = city;
+    public User() {
+
     }
 
     public User(String firstname, String lastname, String username, String email, String password, String city) {
-        userCount++;
-        this.id = userCount;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;

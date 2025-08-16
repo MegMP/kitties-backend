@@ -24,30 +24,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private Optional<User> getUser(String authHeader) {
-        String username = "";
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            username = jwtService.extractUsername(token);
-        }
-        Optional<User> user = userService.loadUser(username);
-        return user;
-    }
-
     @GetMapping("/data")
-    public ResponseEntity<Optional<User>> data(@RequestHeader("Authorization") String authHeader) {
-        return ResponseEntity.ok().body(getUser(authHeader));
+    private ResponseEntity<Optional<User>> getData(@RequestHeader("Authorization") String authHeader) {
+        String username = userService.getUsernameFromToken(authHeader);
+        return ResponseEntity.ok().body(userService.loadUser(username));
     }
 
-    @GetMapping("/photos")
-    public ResponseEntity<List<String>> getPhotos(@RequestHeader("Authorization") String authHeader) {
-        Optional<User> user = getUser(authHeader);
+//    @GetMapping("/photos")
+//    public ResponseEntity<List<String>> getPhotos(@RequestHeader("Authorization") String authHeader) {
+//        Optional<User> user = getUser(authHeader);
+//
+//    }
 
-    }
-
-//    @GetMapping("/data")
-//    public ResponseEntity<Optional<User>> data() {
-//        System.out.println("data");
-//        return ResponseEntity.ok().build();
+//    @GetMapping("/friends")
+//    private ResponseEntity<List<User>> getFriends(@RequestHeader("Authorization") String authHeader) {
+//        return ResponseEntity.ok().body();
 //    }
 }
