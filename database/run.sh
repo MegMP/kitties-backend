@@ -1,0 +1,1 @@
+docker run -d -p 3306:3306 --volume /Users/goga/workspace/data/kitties-db:/var/lib/mysql kitties-db
