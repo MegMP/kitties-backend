@@ -6,6 +6,7 @@ import com.spring.kitties.model.User;
 import com.spring.kitties.persistence.UserRepository;
 import com.spring.kitties.service.AuthService;
 import com.spring.kitties.service.JwtService;
+import com.spring.kitties.service.UserService;
 import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,20 +30,18 @@ public class AuthenticationController {
 
     @Autowired
     private AuthService authService;
-
     @Autowired
     private JwtService jwtService;
-
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             User user = authService.authenticate(loginRequest);
-            return ResponseEntity.ok(new LoginResponse(
-                    jwtService.generateToken(user)
-            ));
+            return ResponseEntity.ok(LoginResponse.builder()
+                    .token(jwtService.generateToken(user)));
+
 
         } catch (BadCredentialsException ex) {
             Map<String, String> error = new HashMap<>();
@@ -59,6 +58,6 @@ public class AuthenticationController {
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.loadUsers();
     }
 }

@@ -7,6 +7,10 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class UserResponse {
-    priv
+public class UserDataResponse {
+    private String username;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private String city;
 }

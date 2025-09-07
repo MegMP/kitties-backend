@@ -1,13 +1,11 @@
 package com.spring.kitties.controller.payload;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Builder
+@Getter
+@Setter
 public class LoginResponse {
-    private final String token;
-
-    public LoginResponse(String token) {
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
-}
+    private final String token;}

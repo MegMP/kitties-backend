@@ -17,27 +17,8 @@ import java.util.Optional;
 @RequestMapping("/api/v1/accounts")
 public class AccountController {
 
-
-    private final UserService userService;
-
     @Autowired
-    public AccountController(UserService userService) {
-        this.userService = userService;
-    }
-
-//    @GetMapping
-//    public ResponseEntity<User> getAccountInfo(@RequestHeader("id") long id) {
-//        try {
-//            Optional<User> user = userService.loadUser(id);
-//            if (user.isEmpty()) {
-//                return ResponseEntity.notFound().build();
-//            }
-//            return ResponseEntity.ok(user.get());
-//        } catch (UserNotFoundException e) {
-//            System.out.println("Error: User not found");
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    UserService userService;
 
     @PatchMapping
     public ResponseEntity<Void> updateUpdate(@RequestBody Map<String, String> updates, @RequestHeader("id") long id, RedirectAttributes redirectAttributes) {

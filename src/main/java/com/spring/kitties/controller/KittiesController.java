@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/kitties")
 @RestController
 public class KittiesController {
+
     @Autowired
     UserService userService;
 
@@ -30,7 +31,7 @@ public class KittiesController {
 
     @GetMapping("/{username}")
     public Optional<User> getByUsername(@PathVariable String username) {
-        return userService.loadUser(username);
+        return userService.loadUserByUsername(username);
     }
 
 }
