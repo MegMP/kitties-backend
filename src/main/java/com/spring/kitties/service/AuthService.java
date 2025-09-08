@@ -20,7 +20,6 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
     @Autowired UserEntityMapper userEntityMapper;
-
     public User authenticate(LoginRequest loginRequest) {
         var authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -28,7 +27,6 @@ public class AuthService {
                 loginRequest.getPassword()
             )
         );
-
         return userRepository.findByUsername(authentication.getName())
                 .map(entity -> userEntityMapper.fromEntity(entity))
                 .get();

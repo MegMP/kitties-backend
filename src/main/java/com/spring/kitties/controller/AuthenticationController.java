@@ -39,8 +39,11 @@ public class AuthenticationController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             User user = authService.authenticate(loginRequest);
-            return ResponseEntity.ok(LoginResponse.builder()
-                    .token(jwtService.generateToken(user)));
+            return ResponseEntity.ok(
+                    LoginResponse.builder()
+                            .token(jwtService.generateToken(user))
+                            .build()
+            );
 
 
         } catch (BadCredentialsException ex) {

@@ -1,15 +1,15 @@
-package com.spring.kitties.model;
+package com.spring.kitties.persistence.entity;
 
 import jakarta.persistence.*;
-import com.spring.kitties.model.UserEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
+@Table(name = "user_profile")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class UserProfileEntity {
     @Id
@@ -31,13 +31,4 @@ public class UserProfileEntity {
     private String email;
     @Setter
     private String city;
-
-    public UserProfileEntity() {}
-
-    public UserProfileEntity(String firstname, String lastname, String email, String city) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.city = city;
-    }
 }

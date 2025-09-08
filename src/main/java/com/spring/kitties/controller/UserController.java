@@ -52,11 +52,11 @@ public class UserController {
 //
 //    }
 
-    @GetMapping("/friends")
-    private ResponseEntity<List<User>> getFriends(@RequestHeader("Authorization") String authHeader) {
-        String username = userService.getUsernameFromToken(authHeader);
-
-        List<User> friends = friendService.findAllFriends(username);
-        return ResponseEntity.ok().body(friends);
-    }
+//    @GetMapping("/friends")
+//    private ResponseEntity<List<User>> getFriends(@RequestHeader("Authorization") String authHeader) {
+//        String username = userService.getUsernameFromToken(authHeader);
+//
+//        List<User> friends = friendService.findAllFriends(username);
+//        return ResponseEntity.ok().body(friends);
+//    }
 }

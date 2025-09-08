@@ -12,7 +12,7 @@ public class FriendService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> findAllFriends(String username) {
-        return userRepository.findAllWithFriendsAndProfilesByUsername(username);
-    }
+//    public List<User> findAllFriends(String username) {
+//        return userRepository.findAllWithFriendsAndProfilesByUsername(username);
+//    }
 }

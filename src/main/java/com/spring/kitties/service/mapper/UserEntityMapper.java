@@ -1,7 +1,7 @@
 package com.spring.kitties.service.mapper;
 
 import com.spring.kitties.model.User;
-import com.spring.kitties.model.UserEntity;
+import com.spring.kitties.persistence.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component

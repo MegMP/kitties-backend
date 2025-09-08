@@ -1,11 +1,12 @@
 package com.spring.kitties.service;
 
 import com.spring.kitties.config.SecurityConfig;
+import com.spring.kitties.exception.DuplicateEmailException;
 import com.spring.kitties.exception.DuplicateUsernameException;
 import com.spring.kitties.model.User;
-import com.spring.kitties.model.UserEntity;
+import com.spring.kitties.persistence.entity.UserEntity;
 import com.spring.kitties.model.UserProfile;
-import com.spring.kitties.model.UserProfileEntity;
+import com.spring.kitties.persistence.entity.UserProfileEntity;
 import com.spring.kitties.persistence.UserProfileRepository;
 import com.spring.kitties.persistence.UserRepository;
 import com.spring.kitties.service.mapper.UserEntityMapper;
@@ -45,25 +46,24 @@ public class UserService {
     }
 
     public Optional<UserProfile> loadUserProfileById(String id) {
-        return userProfileRepository.findById(id)
+        return userProfileRepository.findByUserId(id)
                 .map(entity -> userProfileEntityMapper.fromEntity(entity));
     }
 
     public void addUser(User user, UserProfile userProfile) {
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             throw new DuplicateUsernameException("Username already exists");
         }
-        if (userRepository.findByProfileEmail(userProfile.getEmail()) != null) {
-            throw new DuplicateUsernameException("Username already exists");
+        if (userProfileRepository.existsByEmail(userProfile.getEmail())) {
+            throw new DuplicateEmailException("Email already exists");
         }
 
+        user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
         UserEntity userEntity = userEntityMapper.toEntity(user);
-
-        String password = user.getPassword();
-        user.setPassword(securityConfig.passwordEncoder().encode(password));
         userEntity = userRepository.save(userEntity);
 
-        UserProfileEntity userProfileEntity = userProfileEntityMapper.toEntity(userProfile, userEntity.getUserId());
+        UserProfileEntity userProfileEntity = userProfileEntityMapper.toEntity(userProfile, null);
+        userProfileEntity.setUser(userEntity);
         userProfileRepository.save(userProfileEntity);
     }
 
