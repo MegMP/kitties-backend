@@ -78,4 +78,9 @@ public class UserService {
         String token = authHeadr.substring(7);
         return jwtService.extractUsername(token);
     }
+
+    public String getUserIdFromToken(String authHeadr) {
+        String token = authHeadr.substring(7);
+        return jwtService.extractUserId(token);
+    }
 }

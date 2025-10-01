@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class UserProfileEntityMapper {
     public UserProfile fromEntity(UserProfileEntity userProfileEntity) {
         return UserProfile.builder()
+                .userId(userProfileEntity.getUserId())
                 .firstname(userProfileEntity.getFirstname())
                 .lastname(userProfileEntity.getLastname())
                 .email(userProfileEntity.getEmail())

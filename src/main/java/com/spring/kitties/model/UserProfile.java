@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserProfile {
+    private String userId;
     @NonNull
     private String lastname;
     @NonNull

@@ -1,6 +1,9 @@
 package com.spring.kitties.controller;
 
+import com.spring.kitties.controller.mapper.FriendMapper;
 import com.spring.kitties.controller.mapper.UserDataMapper;
+import com.spring.kitties.controller.payload.FriendResponse;
+import com.spring.kitties.controller.payload.FullFriendResponse;
 import com.spring.kitties.controller.payload.UserDataResponse;
 import com.spring.kitties.model.User;
 import com.spring.kitties.model.UserProfile;
@@ -33,8 +36,10 @@ public class UserController {
     private FriendService friendService;
     @Autowired
     private UserDataMapper userDataMapper;
+    @Autowired
+    private FriendMapper friendMapper;
 
-    @GetMapping("/data")
+    @GetMapping("/me")
     private ResponseEntity<UserDataResponse> getData(@RequestHeader("Authorization") String authHeader) {
         String username = userService.getUsernameFromToken(authHeader);
 
@@ -52,11 +57,4 @@ public class UserController {
 //
 //    }
 
-//    @GetMapping("/friends")
-//    private ResponseEntity<List<User>> getFriends(@RequestHeader("Authorization") String authHeader) {
-//        String username = userService.getUsernameFromToken(authHeader);
-//
-//        List<User> friends = friendService.findAllFriends(username);
-//        return ResponseEntity.ok().body(friends);
-//    }
 }

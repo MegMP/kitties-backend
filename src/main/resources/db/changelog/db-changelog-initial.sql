@@ -29,8 +29,10 @@ create table `friend`
 (
     user_id char(36)    not null,
     friend_id   char(36)  not null,
+    accepted   boolean     not null default false,
 
     foreign key (user_id) references user (user_id),
     foreign key (friend_id) references user (user_id),
+
     constraint uq_friends unique (user_id, friend_id)
-)
+);
