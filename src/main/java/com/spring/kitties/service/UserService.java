@@ -69,10 +69,14 @@ public class UserService {
 
     public void deleteUser(User user) {}
 
-    public void updateUser(long id, Map<String, String> updates) {
-//        userRepository.updateUser(id, updates);
+    public void updateUser(String id, String newUsername, UserProfile newUserProfile) {
+        userRepository.updateUsername(id, newUsername);
+        userProfileRepository.updateUserProfile(id, newUserProfile.getFirstname(), newUserProfile.getLastname(), newUserProfile.getEmail(), newUserProfile.getCity());
     }
 
+    public void updatePassword(String id, String password) {
+        userRepository.updatePassword(id, password);
+    }
 
     public String getUsernameFromToken(String authHeadr) {
         String token = authHeadr.substring(7);

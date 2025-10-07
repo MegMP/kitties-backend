@@ -1,6 +1,7 @@
 package com.spring.kitties.controller.mapper;
 
 import com.spring.kitties.controller.payload.UserDataResponse;
+import com.spring.kitties.controller.payload.UserUpdateRequest;
 import com.spring.kitties.model.User;
 import com.spring.kitties.model.UserProfile;
 import com.spring.kitties.model.UserWithProfile;
@@ -17,6 +18,4 @@ public class UserDataMapper {
                 .city(userProfile.getCity())
                 .build();
     }
-
-
 }
